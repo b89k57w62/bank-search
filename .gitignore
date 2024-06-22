@@ -1,0 +1,34 @@
+**/__pycache__/
+.venv/
+.env
+db.sqlite3
+.DS_Store
+frontend/node_modules/
+frontend/build/
+bank_info.csv
+import_csv.py
+.DS_Store
+/staticfiles/
+
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
