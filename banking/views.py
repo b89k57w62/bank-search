@@ -15,14 +15,16 @@ class BranchList(generics.ListAPIView):
         return bank.branches.all()
     
 class BranchInfoDetail(generics.RetrieveAPIView):
-    queryset = Branch.objects.all()
     serializer_class = BranchSerializer
 
-    def get_queryset(self):
+    def get_object(self):
         bank_code = self.kwargs.get("bank_code")
         branch_code = self.kwargs.get('branch_code')
         branch_name = self.kwargs.get('branch_name')
+        
+        print(f"Received request for bank_code={bank_code}, branch_code={branch_code}, branch_name={branch_name}")
+
         bank = Bank.objects.get(code=bank_code)
-        obj = bank.branches.filter(code=branch_code, name=branch_name).first()
-        return obj
+        return bank.branches.get(code=branch_code, name=branch_name)
+        
     
