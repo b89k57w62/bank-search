@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Select from 'react-select'
-export default function Home() {
+export default function Home(onHome) {
     const [banks, setBanks] = useState([])
     const [branches, setBranches] = useState([])
     const [selectedBank, setSelectedBank] = useState(null)
@@ -10,6 +10,7 @@ export default function Home() {
     const [isBranchDisabled, setIsBranchDisabled] = useState(true)
     const navigate = useNavigate()
     
+
     useEffect(() => {
       axios.get("api/").then(response => {
         setBanks(response.data.map(bank => ({
@@ -17,6 +18,14 @@ export default function Home() {
         })))
       })
     }, [])
+
+    useEffect(() => {
+        axios.get(`api/`).then(response => {
+          setBanks(response.data.map(bank => ({
+              value: bank.code, label: `${bank.code} ${bank.name}`
+          })))
+        })
+      }, [])
 
     useEffect(() => {
       if(selectedBank){
@@ -33,6 +42,7 @@ export default function Home() {
     const handleBankChange = (selectedOption) => {
         setSelectedBank(selectedOption)
         setSelectedBranch(null)
+        setIsBranchDisabled(true)
     }
   
     const handleBranchChange = (selectedOption) => {
