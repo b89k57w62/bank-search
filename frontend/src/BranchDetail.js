@@ -7,11 +7,17 @@ export default function BranchDetail() {
     const [branchDetail, setBranchDetail] = useState(null)
     
     useEffect(() => {
-        const fetchBranchDetail = async () => {
-            const response = await axios.get(`http://127.0.0.1:8000/api/${bankCode}/${branchCode}/${branchName}/`)
-            setBranchDetail(response.data)
+        const storedBranchDetail = localStorage.getItem("branchDetail")
+        if(storedBranchDetail){
+            setBranchDetail(JSON.parse(storedBranchDetail))
+        }else{
+            const fetchBranchDetail = async () => {
+                const response = await axios.get(`http://127.0.0.1:8000/api/${bankCode}/${branchCode}/${branchName}/`)
+                setBranchDetail(response.data)
+                localStorage.setItem("branchDetail", JSON.stringify(response.data))
+            }
+            fetchBranchDetail()
         }
-        fetchBranchDetail()
     }, [bankCode, branchCode, branchName])
     
     if (!branchDetail) {

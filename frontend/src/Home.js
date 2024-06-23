@@ -1,49 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+import Select from 'react-select'
 export default function Home() {
     const [banks, setBanks] = useState([])
     const [branches, setBranches] = useState([])
-    const [selectedBank, setSelectedBank] = useState("")
-    const [selectedBranch, setSelectedBranch] = useState("")
+    const [selectedBank, setSelectedBank] = useState(null)
+    const [selectedBranch, setSelectedBranch] = useState(null)
     const [isBranchDisabled, setIsBranchDisabled] = useState(true)
     const navigate = useNavigate()
-    useEffect(() => {
-      axios.get("api/").then(response => {
-        setBanks(response.data)
-      })
-    }, [])
     
     useEffect(() => {
+      axios.get("api/").then(response => {
+        setBanks(response.data.map(bank => ({
+            value: bank.code, label: `${bank.code} ${bank.name}`
+        })))
+      })
+    }, [])
+
+    useEffect(() => {
       if(selectedBank){
-        axios.get(`api/${selectedBank}/branches/`)
+        axios.get(`api/${selectedBank.value}/branches/`)
         .then(response => {
-          setBranches(response.data)
+          setBranches(response.data.map(branch => ({
+            value: branch.code, label: branch.name
+          })))
           setIsBranchDisabled(false)
         })
       }
     }, [selectedBank])
   
-  
-    const handleBankChange = (event) => {
-      setSelectedBank(event.target.value)
-      setSelectedBranch("")
-      setIsBranchDisabled(true)
+    const handleBankChange = (selectedOption) => {
+        setSelectedBank(selectedOption)
+        setSelectedBranch(null)
     }
   
-    const handleBranchChange = (event) => {
-      const branchCode = event.target.value
-      setSelectedBranch(branchCode)
-    }
-  
-    const selectedBankDetails = banks.find(bank => bank.code == selectedBank)
-    const selectedBranchDetails = branches.find(branch => branch.code == selectedBranch)
-    
-    if (selectedBankDetails && selectedBranchDetails) {
-      const branchName = selectedBranchDetails.name
-      const path = `api/${selectedBankDetails.code}/${selectedBranchDetails.code}/${branchName}/`
-      navigate(path)
+    const handleBranchChange = (selectedOption) => {
+      setSelectedBranch(selectedOption)
+      if(selectedOption){
+        const selectedBranchName = branches.find(branch => branch.value == selectedOption.value).label
+        const path = `api/${selectedBank.value}/${selectedOption.value}/${selectedBranchName}`
+        navigate(path)
+      }
     }
   
     return (
@@ -51,25 +49,22 @@ export default function Home() {
         <h1>台灣銀行代碼查詢</h1>
         <div>
             <label>銀行名稱：</label>
-            <select onChange={ handleBankChange } value={ selectedBank }>
-                <option value="">請輸入關鍵字或選擇銀行代碼...</option>
-                {banks.map(bank => (
-                    <option key={bank.code} value={bank.code}>
-                        {bank.code} {bank.name}
-                    </option>
-                ))}
-            </select>
+            <Select 
+                options={ banks }
+                value={ selectedBank } 
+                onChange={ handleBankChange }
+                placeholder="請輸入關鍵字或選擇銀行代碼..."
+            />
         </div>
         <div>
             <label>分行名稱：</label>
-            <select onChange={ handleBranchChange } value={ selectedBranch } disabled={ isBranchDisabled }>
-                <option value="">請選擇分行名稱...</option>
-                {branches.map(branch => (
-                    <option key={branch.code} value={branch.code}>
-                        {branch.name}
-                    </option>
-                ))}
-            </select>
+            <Select 
+                options={ branches }
+                value={ selectedBranch }
+                onChange={ handleBranchChange }
+                isDisabled={ isBranchDisabled }
+                placeholder="請輸入關鍵字或選擇分行名稱..." 
+            />
         </div>
       </div>
     )
