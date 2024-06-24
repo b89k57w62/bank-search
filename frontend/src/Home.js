@@ -15,7 +15,7 @@ export default function Home() {
     
     useEffect(() => {
       if(selectedBank){
-        axios.get(`api/${selectedBank.value}/branches/`)
+        axios.get(`http://127.0.0.1:8000/api/${selectedBank.value}/branches/`)
         .then(response => {
           setBranches(response.data.map(branch => ({
             value: branch.code, label: branch.name

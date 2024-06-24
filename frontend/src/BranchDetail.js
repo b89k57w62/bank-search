@@ -46,7 +46,7 @@ export default function BranchDetail() {
         const fetchBranchDetail = async () => {
             const response = await axios.get(API)
             setBranchDetail(response.data.branch)
-            navigate(`/api/${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
+            navigate(`http://127.0.0.1:8000/api/${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
         }
         fetchBranchDetail()
     }
