@@ -41,7 +41,7 @@ export default function BranchDetail() {
 
     const handleBranchChange = (selectedOption) => {
         setSelectedBranch(selectedOption)
-        const path = (`https://haosheng.zeabur.app/api${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
+        const path = (`https://haosheng.zeabur.app/api/${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
         window.location.href = path
     }
 
