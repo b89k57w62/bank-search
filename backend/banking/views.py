@@ -30,7 +30,7 @@ class BranchInfoDetail(APIView):
             banks = Bank.objects.all()
             banks_serializer = BankSerializer(banks, many=True)
 
-            branches = Branch.objects.all()
+            branches = bank.branches.all()
             branches_serializer = BranchSerializer(branches, many=True)
 
             return Response({

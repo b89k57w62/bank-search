@@ -9,46 +9,62 @@ export default function BranchDetail() {
     const { bankCode, branchCode, branchName } = useParams()
     const [branchDetail, setBranchDetail] = useState(null)
     const [allBanks, setAllBanks] = useState([])
-    const [allBranches, setAllBranches] = useState([])
+    // const [allBranches, setAllBranches] = useState([])
     const [branches, setBranches] = useState([])
     const [selectedBank, setSelectedBank] = useState(null)
     const [selectedBranch, setSelectedBranch] = useState(null)
     const API = `${process.env.REACT_APP_API_BASE_URL}${ bankCode }/${ branchCode }/${ branchName }/`
     
-    useEffect(() => {
-            const fetchBranchDetail = async () => {
-                const response = await axios.get(API)
-                setBranchDetail(response.data.branch)
-                setAllBranches(response.data.branches || [])
-                setAllBanks(response.data.banks || [])
-            }
-            fetchBranchDetail()
+    // useEffect(() => {
+    //         const fetchBranchDetail = async () => {
+    //             const response = await axios.get(API)
+    //             setBranchDetail(response.data.branch)
+    //             setBranches(response.data.branches || [])
+    //             setAllBanks(response.data.banks || [])
+    //         }
+    //         fetchBranchDetail()
         
-    }, [bankCode, branchCode, branchName])
+    // }, [bankCode, branchCode, branchName])
+
+
+
+    // useEffect(() => {  
+    //     if(selectedBank){
+    //         const bankBranches = allBranches.filter(branch => branch.bank.code === selectedBank.value)
+    //         setBranches(bankBranches)
+    //     }else{
+    //         setBranches([])
+    //     }
+    // }, [selectedBank, allBranches])
+
+    const fetchBranchDetail = async (bankCode, branchCode, branchName) => {
+        const response = await axios.get(API)
+        setBranchDetail(response.data.branch)
+        setBranches(response.data.branches || [])
+        setAllBanks(response.data.banks || [])
+    }
 
     useEffect(() => {
-        
-        if(selectedBank){
-            const bankBranches = allBranches.filter(branch => branch.bank.code === selectedBank.value)
-            setBranches(bankBranches)
-        }else{
-            setBranches([])
+        if (bankCode && branchCode && branchName){
+            fetchBranchDetail(bankCode, branchCode, branchName)
         }
-    }, [selectedBank, allBranches])
+    }, [bankCode, branchCode, branchName])
 
     const handleBankChange = (selectedOption) => {
         setSelectedBank(selectedOption)
         setSelectedBranch(null)
+
+        const fetchBranches = async () => {
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}${selectedOption.value}/`)
+            setBranches(response.data.branches || [])
+        }
+        fetchBranches()
     }
 
     const handleBranchChange = (selectedOption) => {
         setSelectedBranch(selectedOption)
-        const fetchBranchDetail = async () => {
-            const response = await axios.get(API)
-            setBranchDetail(response.data.branch)
-            navigate(`${process.env.REACT_APP_API_BASE_URL}${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
-        }
-        fetchBranchDetail()
+        navigate(`/${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
+        fetchBranchDetail(selectedBank.value, selectedOption.value, selectedOption.label)
     }
 
     if (!branchDetail)  return
