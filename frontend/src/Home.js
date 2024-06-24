@@ -5,7 +5,7 @@ import Select from 'react-select'
 import useBanks from './useBanks'
 
 
-export default function Home(onHome) {
+export default function Home() {
     const banks = useBanks()
     const [branches, setBranches] = useState([])
     const [selectedBank, setSelectedBank] = useState(null)
@@ -34,7 +34,7 @@ export default function Home(onHome) {
     const handleBranchChange = (selectedOption) => {
       setSelectedBranch(selectedOption)
       if(selectedOption){
-        const selectedBranchName = branches.find(branch => branch.value == selectedOption.value).label
+        const selectedBranchName = branches.find(branch => branch.value === selectedOption.value).label
         const path = `api/${selectedBank.value}/${selectedOption.value}/${selectedBranchName}`
         navigate(path)
       }
@@ -42,6 +42,10 @@ export default function Home(onHome) {
   
     return (
       <div>
+         <span>
+            powered by
+            <a href="https://github.com/b89k57w62"> Hao Sheng Wu</a>
+        </span>
         <h1>台灣銀行代碼查詢</h1>
         <div>
             <label>銀行名稱：</label>
@@ -49,7 +53,7 @@ export default function Home(onHome) {
                 options={ banks }
                 value={ selectedBank } 
                 onChange={ handleBankChange }
-                placeholder="請輸入關鍵字或選擇銀行代碼..."
+                placeholder="請輸入關鍵字或選擇銀行..."
             />
         </div>
         <div>
@@ -62,6 +66,7 @@ export default function Home(onHome) {
                 placeholder="請輸入關鍵字或選擇分行名稱..." 
             />
         </div>
+        <small>可使用下拉選單或直接輸入關鍵字查詢</small>
       </div>
     )
   }
