@@ -13,7 +13,7 @@ export default function BranchDetail() {
     const [branches, setBranches] = useState([])
     const [selectedBank, setSelectedBank] = useState(null)
     const [selectedBranch, setSelectedBranch] = useState(null)
-    const API = `http://127.0.0.1:8000/api/${ bankCode }/${ branchCode }/${ branchName }/`
+    const API = `${process.env.BASE_URL}${ bankCode }/${ branchCode }/${ branchName }/`
     
     useEffect(() => {
             const fetchBranchDetail = async () => {
@@ -46,7 +46,7 @@ export default function BranchDetail() {
         const fetchBranchDetail = async () => {
             const response = await axios.get(API)
             setBranchDetail(response.data.branch)
-            navigate(`http://127.0.0.1:8000/api/${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
+            navigate(`${process.env.BASE_URL}${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
         }
         fetchBranchDetail()
     }
