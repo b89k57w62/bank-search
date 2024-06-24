@@ -40,7 +40,7 @@ export default function BranchDetail() {
 
     const handleBranchChange = (selectedOption) => {
         setSelectedBranch(selectedOption)
-        navigate(`/${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
+        navigate(`api/${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
         fetchBranchDetail(selectedBank.value, selectedOption.value, selectedOption.label)
     }
 
