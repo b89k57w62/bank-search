@@ -17,5 +17,7 @@ class BranchSerializer(serializers.ModelSerializer):
 
     def get_url(self, obj):
         request = self.context.get("request")
+        if request is None:
+            return None
         branch_name = obj.name
         return request.build_absolute_uri(f"/{obj.bank.code}/{obj.code}/{branch_name}")

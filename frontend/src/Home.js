@@ -2,31 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Select from 'react-select'
+import useBanks from './useBanks'
+
+
 export default function Home(onHome) {
-    const [banks, setBanks] = useState([])
+    const banks = useBanks()
     const [branches, setBranches] = useState([])
     const [selectedBank, setSelectedBank] = useState(null)
     const [selectedBranch, setSelectedBranch] = useState(null)
     const [isBranchDisabled, setIsBranchDisabled] = useState(true)
     const navigate = useNavigate()
     
-
-    useEffect(() => {
-      axios.get("api/").then(response => {
-        setBanks(response.data.map(bank => ({
-            value: bank.code, label: `${bank.code} ${bank.name}`
-        })))
-      })
-    }, [])
-
-    useEffect(() => {
-        axios.get(`api/`).then(response => {
-          setBanks(response.data.map(bank => ({
-              value: bank.code, label: `${bank.code} ${bank.name}`
-          })))
-        })
-      }, [])
-
     useEffect(() => {
       if(selectedBank){
         axios.get(`api/${selectedBank.value}/branches/`)
