@@ -33,6 +33,8 @@ export default function BranchDetail() {
 
         const fetchBranches = async () => {
             const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}${selectedOption.value}/branches/`)
+            console.log(response.data)
+            console.log(response.data.branches)
             setBranches(response.data.branches || [])
         }
         fetchBranches()
