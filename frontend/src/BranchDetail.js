@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate, Navigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Select from 'react-select'
 import { copyUrl, copyBranchCode } from './tools'
@@ -41,8 +41,8 @@ export default function BranchDetail() {
 
     const handleBranchChange = (selectedOption) => {
         setSelectedBranch(selectedOption)
-        setRedirectPath(`https://haosheng.zeabur.app/api${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
-        fetchBranchDetail(selectedBank.value, selectedOption.value, selectedOption.label)
+        const path = (`https://haosheng.zeabur.app/api${selectedBank.value}/${selectedOption.value}/${selectedOption.label}`)
+        window.location.href = path
     }
 
     if (!branchDetail)  return
@@ -50,7 +50,6 @@ export default function BranchDetail() {
     return (
         
         <div>
-            {redirectPath && <Navigate to={redirectPath} replace />}
             <span>
                 powered by
                 <a href="https://github.com/b89k57w62"> Hao Sheng Wu</a>
