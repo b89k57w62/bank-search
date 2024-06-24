@@ -7,7 +7,7 @@ export default function useBanks(){
 
     useEffect(() => {
         const fetchBanks = async () => {
-            const response = await axios.get("api/")
+            const response = await axios.get("process.env.BASE_URL")
             setBanks(response.data.map(bank => ({
                 value: bank.code, label: `${bank.code} ${bank.name}`
             })))
