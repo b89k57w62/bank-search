@@ -15,7 +15,7 @@ export default function Home() {
     
     useEffect(() => {
       if(selectedBank){
-        axios.get(`${process.env.BASE_URL}${selectedBank.value}/branches/`)
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}${selectedBank.value}/branches/`)
         .then(response => {
           setBranches(response.data.map(branch => ({
             value: branch.code, label: branch.name
