@@ -14,7 +14,8 @@ SECRET_KEY = 'django-insecure-h^eb2i=o(q+jtqaa^!nic+yfv^=xk_89j*hl+2_!ws$wgo0k-=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['haoshengback.zeabur.app', 'haosheng.zeabur.app']
+
 
 
 # Application definition
