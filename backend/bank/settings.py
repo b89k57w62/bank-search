@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,7 +14,8 @@ SECRET_KEY = 'django-insecure-h^eb2i=o(q+jtqaa^!nic+yfv^=xk_89j*hl+2_!ws$wgo0k-=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['haoshengback.zeabur.app', 'haosheng.zeabur.app']
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../.env'))
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST_BACK'), 'haosheng.zeabur.app']
 
 
 
