@@ -18,4 +18,5 @@ https://haosheng.zeabur.app/
 * 後端：Django
 * 資料庫：SQLlite3
 * 版本控制：Git
+* 部署：Zeabur
 
