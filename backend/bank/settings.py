@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-h^eb2i=o(q+jtqaa^!nic+yfv^=xk_89j*hl+2_!ws$wgo0k-=
 DEBUG = True
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../.env'))
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST_BACK'), 'haosheng.zeabur.app']
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST_BACK'), 'haosheng.zeabur.app', 'haoshengomg.zeabur.app']
 
 
 
