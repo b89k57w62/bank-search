@@ -39,7 +39,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://haoshengorz.zeabur.app",
+  "proxy": "https://haoshengorz.zeabur.app/api/",
   
   "engines": {
     "node": "18.1.0"
